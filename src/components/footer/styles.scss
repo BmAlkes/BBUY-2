@@ -1,0 +1,21 @@
+.footer {
+  width: 100%;
+  background-color: var(--dark-blue);
+  position: absolute;
+  bottom: 0;
+  padding: 0.875rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-grey);
+
+  h5 {
+    font-size: 0.6rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  span {
+    font-size: 1.5rem;
+  }
+}
