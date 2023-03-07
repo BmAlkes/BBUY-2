@@ -17,7 +17,7 @@ const Login = () => {
           <input type="password" placeholder="Enter password" required />
           <button className="--btn --btn-primary --btn-block">Login</button>
           <div className={styles.links}>
-            <Link to="">forgot password</Link>
+            <Link to="/reset">forgot password</Link>
           </div>
           <p>-- or --</p>
         </form>
