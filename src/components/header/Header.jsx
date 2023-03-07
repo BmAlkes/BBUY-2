@@ -16,7 +16,7 @@ const logo = (
 );
 
 const cart = (
-  <span className="cart">
+  <span className={styles.cart}>
     <Link to="/cart">
       Cart
       <BsCart size={16} />
