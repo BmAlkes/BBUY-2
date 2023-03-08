@@ -1,9 +1,12 @@
 import React, { useState } from "react";
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import styles from "./Header.module.scss";
 import { BsCart } from "react-icons/bs";
 import { FaShoppingCart, FaTimes, FaUserCircle } from "react-icons/fa";
 import { HiOutlineMenuAlt3 } from "react-icons/hi";
+import { signOut } from "firebase/auth";
+import { auth } from "../../firebase/firebase.config";
+import { toast } from "react-toastify";
 
 const logo = (
   <div className={styles.logo}>
@@ -29,6 +32,7 @@ const Header = () => {
   const [showMenu, setShowMenu] = useState(false);
   const [displayName, setdisplayName] = useState("");
   const [scrollPage, setScrollPage] = useState(false);
+  const navigate = useNavigate();
 
   const activeLink = ({ isActive }) => (isActive ? `${styles.active}` : "");
 
@@ -38,6 +42,17 @@ const Header = () => {
 
   const hideMenu = () => {
     setShowMenu(false);
+  };
+
+  const logoutUserOut = () => {
+    signOut(auth)
+      .then(() => {
+        toast.success("Logut sucess");
+        navigate("/");
+      })
+      .catch((error) => {
+        toast.error(error.message);
+      });
   };
   return (
     <>
@@ -95,9 +110,7 @@ const Header = () => {
                   My Orders
                 </NavLink>
 
-                <NavLink to="/" onClick={""}>
-                  Logout
-                </NavLink>
+                <NavLink onClick={logoutUserOut}>Logout</NavLink>
               </span>
               {cart}
             </div>

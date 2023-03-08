@@ -25,12 +25,12 @@ const Login = () => {
         const user = userCredential.user;
         setIsLoggedIn(false);
         toast.success("Login Sucessfull...");
+        navigate("/");
       })
       .catch((error) => {
         toast.error(error.message);
         setIsLoggedIn(false);
       });
-    navigate("/");
   };
 
   return (
