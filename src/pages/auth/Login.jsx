@@ -3,10 +3,14 @@ import styles from "./auth.module.scss";
 import loginImg from "../../assets/login.png";
 import { Link, useNavigate } from "react-router-dom";
 import { BsGoogle } from "react-icons/bs";
-import { signInWithEmailAndPassword } from "firebase/auth";
+import {
+  GoogleAuthProvider,
+  signInWithEmailAndPassword,
+  signInWithPopup,
+} from "firebase/auth";
 import { toast } from "react-toastify";
 import Loader from "../../components/loader/Loader";
-import { auth } from "../../firebase/firebase.config";
+import { auth, provider } from "../../firebase/firebase.config";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -30,6 +34,25 @@ const Login = () => {
       .catch((error) => {
         toast.error(error.message);
         setIsLoggedIn(false);
+      });
+  };
+
+  const handleGoogleLogin = () => {
+    setIsLoggedIn(true);
+    signInWithPopup(auth, provider)
+      .then((result) => {
+        // This gives you a Google Access Token. You can use it to access the Google API.
+        const credential = GoogleAuthProvider.credentialFromResult(result);
+        const token = credential.accessToken;
+        const user = result.user;
+        // IdP data available using getAdditionalUserInfo(result)
+        console.log(user);
+        toast.success("Login Sucess with google");
+        setIsLoggedIn(false);
+        navigate("/");
+      })
+      .catch((error) => {
+        toast.error(error.message);
       });
   };
 
@@ -65,7 +88,10 @@ const Login = () => {
             </div>
             <p>-- or --</p>
           </form>
-          <button className="--btn --btn-danger --btn-block">
+          <button
+            className="--btn --btn-danger --btn-block"
+            onClick={handleGoogleLogin}
+          >
             <BsGoogle size={20} style={{ margin: " 0 1rem" }} />
             Login with Google
           </button>
