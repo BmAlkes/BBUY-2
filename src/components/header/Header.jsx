@@ -2,12 +2,13 @@ import React, { useState } from "react";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import styles from "./Header.module.scss";
 import { BsCart } from "react-icons/bs";
-import { FaShoppingCart, FaTimes, FaUserCircle } from "react-icons/fa";
+import { FaTimes, FaUserCircle } from "react-icons/fa";
 import { HiOutlineMenuAlt3 } from "react-icons/hi";
 import { signOut } from "firebase/auth";
 import { auth } from "../../firebase/firebase.config";
 import { toast } from "react-toastify";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { AdminOnlyLink } from "../adminOnlyRoute/AdminOnlyRoute";
 
 const logo = (
   <div className={styles.logo}>
@@ -34,6 +35,7 @@ const Header = () => {
   const [scrollPage, setScrollPage] = useState(false);
   const navigate = useNavigate();
   const { userName, isLoggedIn } = useSelector((state) => state.auth);
+  const dispatch = useDispatch();
 
   const activeLink = ({ isActive }) => (isActive ? `${styles.active}` : "");
 
@@ -81,9 +83,11 @@ const Header = () => {
                 <FaTimes size={22} color="#fff" onClick={hideMenu} />
               </li>
               <li>
-                <Link to="/admin/home">
-                  <button className="--btn --btn-primary">Admin</button>
-                </Link>
+                <AdminOnlyLink>
+                  <Link to="/admin/home">
+                    <button className="--btn --btn-primary">Admin</button>
+                  </Link>
+                </AdminOnlyLink>
               </li>
               <li>
                 <NavLink to="/" className={activeLink}>
@@ -99,9 +103,7 @@ const Header = () => {
             <div className={styles["header-right"]} onClick={hideMenu}>
               {!isLoggedIn && (
                 <span className={styles.links}>
-                  <NavLink to="/login" className={""}>
-                    Login
-                  </NavLink>
+                  <NavLink to="/login">Login</NavLink>
                 </span>
               )}
               <span className={styles.links}>
@@ -112,9 +114,7 @@ const Header = () => {
 
                 {isLoggedIn && (
                   <>
-                    <NavLink to="/order-history" className={""}>
-                      My Orders
-                    </NavLink>
+                    <NavLink to="/order-history">My Orders</NavLink>
                     <NavLink onClick={logoutUserOut}>Logout</NavLink>
                   </>
                 )}

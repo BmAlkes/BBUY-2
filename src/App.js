@@ -11,10 +11,10 @@ import Register from "./pages/auth/Register";
 import Reset from "./pages/auth/Reset";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { onAuthStateChanged } from "firebase/auth";
+import { onAuthStateChanged, signOut } from "firebase/auth";
 import { auth } from "./firebase/firebase.config";
 import { useDispatch } from "react-redux";
-import { SET_ACTIVE_USER } from "./store/slice/authSlice";
+import { SET_ACTIVE_USER, REMOVE_ACTIVE_USER } from "./store/slice/authSlice";
 
 function App() {
   const dispatch = useDispatch();
@@ -41,6 +41,8 @@ function App() {
             })
           );
         }
+      } else {
+        dispatch(REMOVE_ACTIVE_USER());
       }
     });
   }, [dispatch]);
