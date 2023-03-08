@@ -10,7 +10,7 @@ const Slider = () => {
 
   const autoScroll = true;
   let slideInterval;
-  let intervalTime = 5000;
+  let intervalTime = 10000;
 
   const nextSlide = () => {
     setCurrentSlide(currentSlide === slideLength - 1 ? 0 : currentSlide + 1);
@@ -23,10 +23,6 @@ const Slider = () => {
   useEffect(() => {
     setCurrentSlide(0);
   }, []);
-
-  //   const auto = () => {
-  //     slideInterval = setInterval(nextSlide, intervalTime);
-  //   };
 
   useEffect(() => {
     if (autoScroll) {
