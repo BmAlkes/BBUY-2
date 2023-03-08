@@ -7,6 +7,7 @@ import { HiOutlineMenuAlt3 } from "react-icons/hi";
 import { signOut } from "firebase/auth";
 import { auth } from "../../firebase/firebase.config";
 import { toast } from "react-toastify";
+import { useSelector } from "react-redux";
 
 const logo = (
   <div className={styles.logo}>
@@ -30,9 +31,9 @@ const cart = (
 
 const Header = () => {
   const [showMenu, setShowMenu] = useState(false);
-  const [displayName, setdisplayName] = useState("");
   const [scrollPage, setScrollPage] = useState(false);
   const navigate = useNavigate();
+  const { userName, isLoggedIn } = useSelector((state) => state.auth);
 
   const activeLink = ({ isActive }) => (isActive ? `${styles.active}` : "");
 
@@ -96,22 +97,29 @@ const Header = () => {
               </li>
             </ul>
             <div className={styles["header-right"]} onClick={hideMenu}>
+              {!isLoggedIn && (
+                <span className={styles.links}>
+                  <NavLink to="/login" className={""}>
+                    Login
+                  </NavLink>
+                </span>
+              )}
               <span className={styles.links}>
-                <NavLink to="/login" className={""}>
-                  Login
-                </NavLink>
-
                 <a href="#home" style={{ color: "#ff7722" }}>
                   <FaUserCircle size={16} />
-                  Hi, {displayName}
+                  Hello, {userName ? userName : "Guest"}
                 </a>
 
-                <NavLink to="/order-history" className={""}>
-                  My Orders
-                </NavLink>
-
-                <NavLink onClick={logoutUserOut}>Logout</NavLink>
+                {isLoggedIn && (
+                  <>
+                    <NavLink to="/order-history" className={""}>
+                      My Orders
+                    </NavLink>
+                    <NavLink onClick={logoutUserOut}>Logout</NavLink>
+                  </>
+                )}
               </span>
+
               {cart}
             </div>
           </nav>
