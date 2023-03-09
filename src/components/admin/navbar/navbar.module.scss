@@ -10,7 +10,13 @@
     padding: 4rem;
     background-color: var(--light-blue);
 
+    img {
+      border-radius: 50%;
+      object-fit: cover;
+    }
+
     h4 {
+      font-size: 1.5em;
       color: #fff;
     }
   }
@@ -30,6 +36,7 @@
 
 .active {
   cursor: pointer;
+  color: orangered;
 }
 
 .active::before {
@@ -37,7 +44,7 @@
   position: absolute;
   right: 0;
   top: 0;
-  width: 4px;
+  width: 5px;
   height: 100%;
   background-color: orangered;
 }

@@ -40,6 +40,7 @@ function App() {
               email: user.email,
               userName: user.displayName,
               userId: user.uid,
+              photo: user.photoURL,
             })
           );
         }
