@@ -15,6 +15,8 @@ import { onAuthStateChanged, signOut } from "firebase/auth";
 import { auth } from "./firebase/firebase.config";
 import { useDispatch } from "react-redux";
 import { SET_ACTIVE_USER, REMOVE_ACTIVE_USER } from "./store/slice/authSlice";
+import Admin from "./pages/admin/Admin";
+import AdminOnlyRoute from "./components/adminOnlyRoute/AdminOnlyRoute";
 
 function App() {
   const dispatch = useDispatch();
@@ -60,6 +62,14 @@ function App() {
             <Route path="/reset" element={<Reset />} />
             <Route path="/order-history" element={<OrderHistoryPage />} />
             <Route path="/cart" element={<Cart />} />
+            <Route
+              path="/admin/*"
+              element={
+                <AdminOnlyRoute>
+                  <Admin />
+                </AdminOnlyRoute>
+              }
+            />
           </Route>
         </Routes>
       </BrowserRouter>

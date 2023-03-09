@@ -2,7 +2,7 @@ export const sliderData = [
   {
     image:
       "https://res.cloudinary.com/binvent/image/upload/v1678285968/BInvent%20App/bg-4_xliv1v.jpg",
-    heading: "Shoes Villa",
+    heading: "Shoes",
     desc: "Up to 30% off on all onsale proucts.",
   },
   {
