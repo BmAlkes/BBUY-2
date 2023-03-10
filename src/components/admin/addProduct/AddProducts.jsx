@@ -149,6 +149,14 @@ const AddProduct = () => {
                 />
               )}
             </Card>
+            {product.imageURL ? (
+              <img
+                src={product.imageURL}
+                style={{ height: "180px", width: "100%", objectFit: "cover" }}
+              />
+            ) : (
+              ""
+            )}
             <label>Product price:</label>
             <input
               type="text"
