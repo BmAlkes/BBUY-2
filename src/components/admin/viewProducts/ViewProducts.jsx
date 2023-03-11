@@ -15,8 +15,11 @@ import { Link } from "react-router-dom";
 import { FaEdit, FaTrash } from "react-icons/fa";
 import { deleteObject, ref } from "firebase/storage";
 import Notiflix from "notiflix";
+import { useDispatch } from "react-redux";
+import { STORE_PRODUCTS } from "../../../store/slice/productSlice";
 
 const ViewProducts = () => {
+  const dispatch = useDispatch();
   const [product, setProducts] = useState([]);
   const [isLoading, setLoading] = useState(false);
 
@@ -31,9 +34,9 @@ const ViewProducts = () => {
           id: doc.id,
           ...doc.data(),
         }));
-        console.log(allProducts);
         setProducts(allProducts);
         setLoading(false);
+        dispatch(STORE_PRODUCTS({ products: allProducts }));
       });
     } catch (error) {
       setLoading(false);

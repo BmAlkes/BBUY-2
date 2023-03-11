@@ -1,9 +1,11 @@
 import { addDoc, collection, Timestamp } from "firebase/firestore";
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { db, storage } from "../../../firebase/firebase.config";
+import { STORE_PRODUCTS } from "../../../store/slice/productSlice";
 import Card from "../../card/Card";
 import Loader from "../../loader/Loader";
 import styles from "./addProduct.module.scss";
@@ -40,6 +42,7 @@ const initialState = {
 };
 
 const AddProduct = () => {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
   const [product, setProduct] = useState({
@@ -150,6 +153,7 @@ const AddProduct = () => {
               )}
             </Card>
             {product.imageURL ? (
+              // eslint-disable-next-line jsx-a11y/alt-text
               <img
                 src={product.imageURL}
                 style={{ height: "180px", width: "100%", objectFit: "cover" }}
