@@ -9,7 +9,7 @@
     min-height: 80vh;
     @media (max-width: 768px) {
       width: 100%;
-      min-height: auto;
+      min-height: 0;
     }
   }
   .content {
