@@ -1,12 +1,22 @@
 .admin {
   display: flex;
+  @media (max-width: 768px) {
+    flex-direction: column;
+  }
 
   .navbar {
     width: 25%;
     min-height: 80vh;
+    @media (max-width: 768px) {
+      width: 100%;
+      min-height: auto;
+    }
   }
   .content {
     width: 75%;
     padding: 1rem;
+    @media (max-width: 768px) {
+      width: 100%;
+    }
   }
 }
