@@ -30,7 +30,7 @@ const Products = () => {
     <section>
       <div className={`container ${styles.product}`}>
         <aside className={styles.filter}>
-          <ProductFilter />
+          {isLoading ? null : <ProductFilter />}
         </aside>
         <div className={styles.content}>
           {isLoading ? <Loader /> : <ProductList products={products} />}

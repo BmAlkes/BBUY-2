@@ -14,8 +14,10 @@
       width: 45%;
       border: 1px solid #ccc;
       border-radius: 3px;
+      height: 100%;
       img {
         width: 100%;
+        object-fit: cover;
       }
     }
 

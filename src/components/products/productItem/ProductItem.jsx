@@ -23,7 +23,7 @@ const productItem = ({ id, name, desc, brand, imageURL, price, grid }) => {
           <p>{`$${price}`}</p>
           <h4>{shortenText(name, 12)}</h4>
         </div>
-        {!grid && <p className={styles.desc}>{shortenText(desc, 200)}</p>}
+        {!grid && <p className={styles.desc}>{shortenText(desc, 50)}</p>}
         <button className="--btn --btn-primary">Add to cart</button>
       </div>
     </Card>
