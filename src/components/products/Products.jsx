@@ -5,6 +5,7 @@ import { STORE_PRODUCTS } from "../../store/slice/productSlice";
 import ProductFilter from "./productFilter/ProductFilter";
 import ProductList from "./productList/ProductList";
 import styles from "./products.module.scss";
+import Loader from "../loader/Loader";
 
 const Products = () => {
   const { data, isLoading } = useFetchCollection("products");
@@ -32,7 +33,7 @@ const Products = () => {
           <ProductFilter />
         </aside>
         <div className={styles.content}>
-          <ProductList products={products} />
+          {isLoading ? <Loader /> : <ProductList products={products} />}
         </div>
       </div>
     </section>
