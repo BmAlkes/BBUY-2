@@ -19,7 +19,6 @@ const ProductList = ({ products }) => {
   const filteredProducts = useSelector(
     (state) => state.filter.filteredProducts
   );
-  console.log(filteredProducts);
 
   useEffect(() => {
     dispatch(FILTER_BY_SEARCH({ search, products }));

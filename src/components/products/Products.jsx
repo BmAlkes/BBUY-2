@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import useFetchCollection from "../../Hooks/useFetchColletion";
-import { STORE_PRODUCTS } from "../../store/slice/productSlice";
+import {
+  GET_PRICE_RANGE,
+  STORE_PRODUCTS,
+} from "../../store/slice/productSlice";
 import ProductFilter from "./productFilter/ProductFilter";
 import ProductList from "./productList/ProductList";
 import styles from "./products.module.scss";
@@ -13,7 +16,6 @@ const Products = () => {
   const dispatch = useDispatch();
 
   const products = useSelector((state) => state.product.products);
-  console.log(products);
 
   useEffect(() => {
     dispatch(STORE_PRODUCTS({ products: data }));
@@ -21,6 +23,11 @@ const Products = () => {
   useEffect(() => {
     dispatch(
       STORE_PRODUCTS({
+        products: data,
+      })
+    );
+    dispatch(
+      GET_PRICE_RANGE({
         products: data,
       })
     );
