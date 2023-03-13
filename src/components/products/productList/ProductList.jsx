@@ -13,9 +13,14 @@ const ProductList = ({ products }) => {
   const [sort, setSort] = useState("latest");
   const dispatch = useDispatch();
 
+  const filteredProducts = useSelector(
+    (state) => state.filter.filteredProducts
+  );
+  console.log(filteredProducts);
+
   useEffect(() => {
-    dispatch(FILTER_BY_SEARCH(search));
-  }, []);
+    dispatch(FILTER_BY_SEARCH({ search, products }));
+  }, [dispatch, search, products]);
 
   return (
     <div className={styles["product-list"]} id="product">
@@ -30,7 +35,7 @@ const ProductList = ({ products }) => {
           <FaListAlt size={24} color="#0066d4" onClick={() => setGrid(false)} />
 
           <p>
-            <b>{10}</b> Products found.
+            <b>{filteredProducts.length}</b> Products found.
           </p>
         </div>
         {/* Search Icon */}
@@ -54,7 +59,7 @@ const ProductList = ({ products }) => {
           <p>No product found.</p>
         ) : (
           <>
-            {products.map((product) => {
+            {filteredProducts.map((product) => {
               return (
                 <div key={product.id}>
                   <ProductItem {...product} grid={grid} product={product} />

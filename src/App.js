@@ -9,15 +9,15 @@ import Cart from "./pages/cart/Cart";
 import Login from "./pages/auth/Login";
 import Register from "./pages/auth/Register";
 import Reset from "./pages/auth/Reset";
-import ProductsDetails from "./components/products/productDetails/ProductsDetail";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { onAuthStateChanged, signOut } from "firebase/auth";
+import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "./firebase/firebase.config";
 import { useDispatch } from "react-redux";
 import { SET_ACTIVE_USER, REMOVE_ACTIVE_USER } from "./store/slice/authSlice";
 import Admin from "./pages/admin/Admin";
 import AdminOnlyRoute from "./components/adminOnlyRoute/AdminOnlyRoute";
+import ProductsDetails from "./components/products/productDetails/ProductsDetail";
 
 function App() {
   const dispatch = useDispatch();
