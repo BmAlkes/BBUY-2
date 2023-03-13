@@ -65,6 +65,7 @@ function App() {
             <Route path="/order-history" element={<OrderHistoryPage />} />
             <Route path="/cart" element={<Cart />} />
             <Route path="/product-details/:id" element={<ProductsDetails />} />
+            <Route path="/checkout-details" />
             <Route
               path="/admin/*"
               element={

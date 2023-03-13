@@ -27,6 +27,15 @@ const Header = () => {
   const { userName, isLoggedIn } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
 
+  const fixNavbar = () => {
+    if (window.scrollY > 50) {
+      setScrollPage(true);
+    } else {
+      setScrollPage(false);
+    }
+  };
+  window.addEventListener("scroll", fixNavbar);
+
   const activeLink = ({ isActive }) => (isActive ? `${styles.active}` : "");
 
   const toggleMenu = () => {
