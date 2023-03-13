@@ -9,6 +9,7 @@ import {
   FILTER_BY_SEARCH,
   SORT_PRODUCTS,
 } from "../../../store/slice/filterSlice";
+import Pagination from "../../pagination/Pagination";
 
 const ProductList = ({ products }) => {
   const [grid, setGrid] = useState(true);
@@ -18,6 +19,15 @@ const ProductList = ({ products }) => {
 
   const filteredProducts = useSelector(
     (state) => state.filter.filteredProducts
+  );
+  const [currentPage, setCurrentPage] = useState(1);
+  const [productsPerPage] = useState(9);
+  // Get Current Products
+  const indexOfLastProduct = currentPage * productsPerPage;
+  const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
+  const currentProducts = filteredProducts.slice(
+    indexOfFirstProduct,
+    indexOfLastProduct
   );
 
   useEffect(() => {
@@ -65,7 +75,7 @@ const ProductList = ({ products }) => {
           <p>No product found.</p>
         ) : (
           <>
-            {filteredProducts.map((product) => {
+            {currentProducts.map((product) => {
               return (
                 <div key={product.id}>
                   <ProductItem {...product} grid={grid} product={product} />
@@ -74,12 +84,12 @@ const ProductList = ({ products }) => {
             })}
           </>
         )}
-        {/* <Pagination
+        <Pagination
           currentPage={currentPage}
           setCurrentPage={setCurrentPage}
           productsPerPage={productsPerPage}
           totalProducts={filteredProducts.length}
-        /> */}
+        />
       </div>
     </div>
   );
