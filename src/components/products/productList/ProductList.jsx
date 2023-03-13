@@ -5,7 +5,10 @@ import { FaListAlt } from "react-icons/fa";
 import Search from "../../search/Search";
 import ProductItem from "../productItem/ProductItem";
 import { useDispatch, useSelector } from "react-redux";
-import { FILTER_BY_SEARCH } from "../../../store/slice/filterSlice";
+import {
+  FILTER_BY_SEARCH,
+  SORT_PRODUCTS,
+} from "../../../store/slice/filterSlice";
 
 const ProductList = ({ products }) => {
   const [grid, setGrid] = useState(true);
@@ -21,6 +24,10 @@ const ProductList = ({ products }) => {
   useEffect(() => {
     dispatch(FILTER_BY_SEARCH({ search, products }));
   }, [dispatch, search, products]);
+
+  useEffect(() => {
+    dispatch(SORT_PRODUCTS({ products, sort }));
+  }, [dispatch, sort, products]);
 
   return (
     <div className={styles["product-list"]} id="product">
