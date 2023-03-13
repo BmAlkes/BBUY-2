@@ -4,26 +4,44 @@ import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import useFetchDocument from "../../../Hooks/useFetchDocument";
+import useFetchCollection from "../../../Hooks/useFetchColletion";
+import {
+  ADD_TO_CART,
+  CALCULATE_TOTAL_QUANTITY,
+  DECREASE_CART,
+  selectCartItems,
+} from "../../../store/slice/cartSlice";
 import spinnerImg from "../../../assets/spinner.jpg";
 import Card from "../../card/Card";
+import StarsRating from "react-star-rate";
 
 const ProductsDetails = () => {
   const { id } = useParams();
   const [product, setProduct] = useState(null);
   const dispatch = useDispatch();
-  // const cartItems = useSelector(state=> state.);
+  const cartItems = useSelector((state) => state.cart.cartItems);
   const { document } = useFetchDocument("products", id);
-  // const { data } = useFetchCollection("reviews");
-  // const filteredReviews = data.filter((review) => review.productID === id);
+  const { data } = useFetchCollection("reviews");
+  const filteredReviews = data.filter((review) => review.productID === id);
 
-  // const cart = cartItems.find((cart) => cart.id === id);
-  // const isCartAdded = cartItems.findIndex((cart) => {
-  //   return cart.id === id;
-  // });
+  const cart = cartItems.find((cart) => cart.id === id);
+  const isCartAdded = cartItems.findIndex((cart) => {
+    return cart.id === id;
+  });
   console.log(document);
   useEffect(() => {
     setProduct(document);
   }, [document]);
+
+  const addToCart = (product) => {
+    dispatch(ADD_TO_CART(product));
+    dispatch(CALCULATE_TOTAL_QUANTITY());
+  };
+
+  const decreaseCart = (product) => {
+    dispatch(DECREASE_CART(product));
+    dispatch(CALCULATE_TOTAL_QUANTITY());
+  };
 
   return (
     <section>
@@ -52,7 +70,7 @@ const ProductsDetails = () => {
                 </p>
 
                 <div className={styles.count}>
-                  {/* {isCartAdded < 0 ? null : (
+                  {isCartAdded < 0 ? null : (
                     <>
                       <button
                         className="--btn"
@@ -70,9 +88,14 @@ const ProductsDetails = () => {
                         +
                       </button>
                     </>
-                  )} */}
+                  )}
                 </div>
-                <button className="--btn --btn-danger">ADD TO CART</button>
+                <button
+                  className="--btn --btn-danger"
+                  onClick={() => addToCart(product)}
+                >
+                  ADD TO CART
+                </button>
               </div>
             </div>
           </>
@@ -80,7 +103,7 @@ const ProductsDetails = () => {
         <Card cardClass={styles.card}>
           <h4>Product Reviews</h4>
           <div>
-            {/* {filteredReviews.length === 0 ? (
+            {filteredReviews.length === 0 ? (
               <p>There are no reviews for this product yet.</p>
             ) : (
               <>
@@ -101,7 +124,7 @@ const ProductsDetails = () => {
                   );
                 })}
               </>
-            )} */}
+            )}
           </div>
         </Card>
       </div>

@@ -20,16 +20,6 @@ const logo = (
   </div>
 );
 
-const cart = (
-  <span className={styles.cart}>
-    <Link to="/cart">
-      Cart
-      <BsCart size={16} />
-      <p>5</p>
-    </Link>
-  </span>
-);
-
 const Header = () => {
   const [showMenu, setShowMenu] = useState(false);
   const [scrollPage, setScrollPage] = useState(false);
@@ -43,6 +33,8 @@ const Header = () => {
     setShowMenu(!showMenu);
   };
 
+  const totalQuantity = useSelector((state) => state.cart.cartTotalQuantity);
+  console.log(totalQuantity);
   const hideMenu = () => {
     setShowMenu(false);
   };
@@ -57,6 +49,16 @@ const Header = () => {
         toast.error(error.message);
       });
   };
+
+  const cart = (
+    <span className={styles.cart}>
+      <Link to="/cart">
+        Cart
+        <BsCart size={16} />
+        <p>{totalQuantity}</p>
+      </Link>
+    </span>
+  );
   return (
     <>
       <header className={scrollPage ? `${styles.fixed}` : null}>

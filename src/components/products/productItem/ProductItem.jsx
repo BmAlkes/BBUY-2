@@ -2,8 +2,19 @@ import React from "react";
 import styles from "./productItem.module.scss";
 import Card from "../../card/Card";
 import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { ADD_TO_CART } from "../../../store/slice/cartSlice";
 
-const productItem = ({ id, name, desc, brand, imageURL, price, grid }) => {
+const ProductItem = ({
+  id,
+  name,
+  desc,
+  brand,
+  imageURL,
+  price,
+  grid,
+  product,
+}) => {
   const shortenText = (text, n) => {
     if (text.length > n) {
       const shortenedText = text.substring(0, n).concat("...");
@@ -11,6 +22,13 @@ const productItem = ({ id, name, desc, brand, imageURL, price, grid }) => {
     }
     return text;
   };
+
+  const dispatch = useDispatch();
+  const handleAddToCart = (product) => {
+    console.log(product);
+    dispatch(ADD_TO_CART(product));
+  };
+
   return (
     <Card cardClass={grid ? `${styles.grid}` : `${styles.list}`}>
       <Link to={`/product-details/${id}`}>
@@ -24,10 +42,15 @@ const productItem = ({ id, name, desc, brand, imageURL, price, grid }) => {
           <h4>{shortenText(name, 12)}</h4>
         </div>
         {!grid && <p className={styles.desc}>{shortenText(desc, 50)}</p>}
-        <button className="--btn --btn-primary">Add to cart</button>
+        <button
+          className="--btn --btn-primary"
+          onClick={() => handleAddToCart(product)}
+        >
+          Add to cart
+        </button>
       </div>
     </Card>
   );
 };
 
-export default productItem;
+export default ProductItem;
