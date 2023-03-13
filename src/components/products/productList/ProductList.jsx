@@ -1,14 +1,22 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./productList.module.scss";
 import { BsFillGridFill } from "react-icons/bs";
 import { FaListAlt } from "react-icons/fa";
 import Search from "../../search/Search";
 import ProductItem from "../productItem/ProductItem";
+import { useDispatch, useSelector } from "react-redux";
+import { FILTER_BY_SEARCH } from "../../../store/slice/filterSlice";
 
 const ProductList = ({ products }) => {
   const [grid, setGrid] = useState(true);
   const [search, setSearch] = useState("");
   const [sort, setSort] = useState("latest");
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(FILTER_BY_SEARCH(search));
+  }, []);
+
   return (
     <div className={styles["product-list"]} id="product">
       <div className={styles.top}>
