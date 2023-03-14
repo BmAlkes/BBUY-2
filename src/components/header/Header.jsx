@@ -43,7 +43,6 @@ const Header = () => {
   };
 
   const totalQuantity = useSelector((state) => state.cart.cartTotalQuantity);
-  console.log(totalQuantity);
   const hideMenu = () => {
     setShowMenu(false);
   };

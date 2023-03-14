@@ -1,0 +1,26 @@
+.card {
+  width: 100%;
+  max-width: 500px;
+  padding: 1rem;
+  border: 1px solid var(--light-blue);
+  margin-bottom: 5px;
+  h4 {
+    font-size: 1.2rem;
+  }
+  p {
+    font-size: 1rem;
+  }
+}
+h3 {
+  font-size: 1rem;
+  font-weight: 300;
+}
+
+.text {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  h3 {
+    color: var(--color-danger);
+  }
+}
