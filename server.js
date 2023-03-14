@@ -1,7 +1,10 @@
-require("dotenv").config();
+const dotenv = require("dotenv");
+dotenv.config();
 const express = require("express");
 const cors = require("cors");
-const stripe = require("stripe")(process.env.STRIPE_PRIVATE_KEY);
+const stripe = require("stripe")(
+  "sk_test_51MlU4LCPLNpfEWfyIC4P8f325i2CJYFWW2ce76EWTo6Q5PoKCIWFRKOyRtyQP6mgfMopS1uARzMmbinyNzptcW5v00J8rTZE1n"
+);
 
 const app = express();
 app.use(cors());
@@ -10,7 +13,7 @@ const path = require("path");
 
 if (process.env.NODE_ENV === "production") {
   app.use(express.static("build"));
-  app.get("*", (req, res) => {
+  app.get("*", (_req, res) => {
     res.sendFile(path.resolve(__dirname, "build", "index.html"));
   });
 }
@@ -59,7 +62,7 @@ app.post("/create-payment-intent", async (req, res) => {
   });
 
   res.send({
-    clientSecret: paymentIntent.client_secret,
+    clientSecret: paymentIntent,
   });
 });
 

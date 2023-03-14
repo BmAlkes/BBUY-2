@@ -4,21 +4,21 @@ import {
   useStripe,
   useElements,
 } from "@stripe/react-stripe-js";
-import styles from "./CheckoutForm.module.scss";
+import styles from "./styles.module.scss";
 import Card from "../card/Card";
 import CheckoutSummary from "../checkoutSummary/CheckoutSummary";
 import spinnerImg from "../../assets/spinner.jpg";
 import { toast } from "react-toastify";
 import { useDispatch, useSelector } from "react-redux";
-import { selectEmail, selectUserID } from "../../redux/slice/authSlice";
+import { selectEmail, selectUserID } from "../../store/slice/authSlice";
 import {
   CLEAR_CART,
   selectCartItems,
   selectCartTotalAmount,
-} from "../../redux/slice/cartSlice";
-import { selectShippingAddress } from "../../redux/slice/checkoutSlice";
+} from "../../store/slice/cartSlice";
+import { selectShippingAdress } from "../../store/slice/checkoutSlice";
 import { addDoc, collection, Timestamp } from "firebase/firestore";
-import { db } from "../../firebase/config";
+import { db } from "../../firebase/firebase.config";
 import { useNavigate } from "react-router-dom";
 
 const CheckoutForm = () => {
@@ -34,7 +34,8 @@ const CheckoutForm = () => {
   const userEmail = useSelector(selectEmail);
   const cartItems = useSelector(selectCartItems);
   const cartTotalAmount = useSelector(selectCartTotalAmount);
-  const shippingAddress = useSelector(selectShippingAddress);
+  const shippingAddress = useSelector(selectShippingAdress);
+  console.log(stripe);
 
   useEffect(() => {
     if (!stripe) {
