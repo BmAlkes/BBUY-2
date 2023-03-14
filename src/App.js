@@ -20,6 +20,10 @@ import AdminOnlyRoute from "./components/adminOnlyRoute/AdminOnlyRoute";
 import ProductsDetails from "./components/products/productDetails/ProductsDetail";
 import Checkout from "./pages/checkout/Checkout";
 import CheckoutDetails from "./pages/checkout/checkoutDetails/CheckoutDetails";
+import CheckoutSucess from "./pages/checkout/CheckoutSucess/CheckoutSucess";
+import OrderDetails from "./pages/orderDerails/OrderDetails";
+import ReviewProducts from "./components/reviewProducts/ReviewProducts";
+import NotFound from "./pages/notFound/NotFound";
 
 function App() {
   const dispatch = useDispatch();
@@ -69,6 +73,14 @@ function App() {
             <Route path="/cart" element={<Cart />} />
             <Route path="/checkout-details" element={<CheckoutDetails />} />
             <Route path="/checkout" element={<Checkout />} />
+            <Route path="/checkout-success" element={<CheckoutSucess />} />
+            <Route
+              path="/checkout-success/order-history"
+              element={<OrderHistoryPage />}
+            />
+            <Route path="/order-details/:id" element={<OrderDetails />} />
+            <Route path="/review-product/:id" element={<ReviewProducts />} />
+            <Route path="*" element={<NotFound />} />
             <Route
               path="/admin/*"
               element={

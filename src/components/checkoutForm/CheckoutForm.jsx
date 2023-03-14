@@ -35,13 +35,11 @@ const CheckoutForm = () => {
   const cartItems = useSelector(selectCartItems);
   const cartTotalAmount = useSelector(selectCartTotalAmount);
   const shippingAddress = useSelector(selectShippingAdress);
-  console.log(stripe);
 
   useEffect(() => {
     if (!stripe) {
       return;
     }
-
     const clientSecret = new URLSearchParams(window.location.search).get(
       "payment_intent_client_secret"
     );
@@ -67,6 +65,7 @@ const CheckoutForm = () => {
       shippingAddress,
       createdAt: Timestamp.now().toDate(),
     };
+    console.log(orderConfig);
     try {
       addDoc(collection(db, "orders"), orderConfig);
       dispatch(CLEAR_CART());
@@ -74,6 +73,7 @@ const CheckoutForm = () => {
       navigate("/checkout-success");
     } catch (error) {
       toast.error(error.message);
+      console.log(error.message);
     }
   };
 

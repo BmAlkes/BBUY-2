@@ -3,25 +3,30 @@ import { loadStripe } from "@stripe/stripe-js";
 import { Elements } from "@stripe/react-stripe-js";
 import { useDispatch, useSelector } from "react-redux";
 import {
+  CALCULATE_SUBTOTAL,
+  CALCULATE_TOTAL_QUANTITY,
+  selectCartItems,
+  selectCartTotalAmount,
+} from "../../store/slice/cartSlice";
+import { selectEmail } from "../../store/slice/authSlice";
+import {
   selectBillingAdress,
   selectShippingAdress,
 } from "../../store/slice/checkoutSlice";
-import {
-  CALCULATE_SUBTOTAL,
-  CALCULATE_TOTAL_QUANTITY,
-} from "../../store/slice/cartSlice";
 import { toast } from "react-toastify";
 import CheckoutForm from "../../components/checkoutForm/CheckoutForm";
 
-const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_PK);
+const stripePromise = loadStripe(
+  "pk_test_51MlU4LCPLNpfEWfyjqFIHCGgPtHPKXjTk7rVKNUMcqTWwLZKewcbbNtRBOBjJd33Ptb5nxNha1j2ssMPA7x1h3u1001Hodo7iG"
+);
 
 const Checkout = () => {
   const [message, setMessage] = useState("Initializing checkout...");
   const [clientSecret, setClientSecret] = useState("");
 
-  const cartItems = useSelector((state) => state.cart.cartItems);
-  const totalAmount = useSelector((state) => state.cart.totalAmount);
-  const customerEmail = useSelector((state) => state.cart.customerEmail);
+  const cartItems = useSelector(selectCartItems);
+  const totalAmount = useSelector(selectCartTotalAmount);
+  const customerEmail = useSelector(selectEmail);
 
   const shippingAddress = useSelector(selectShippingAdress);
   const billingAddress = useSelector(selectBillingAdress);
@@ -58,7 +63,6 @@ const Checkout = () => {
         setClientSecret(data.clientSecret);
       })
       .catch((error) => {
-        console.log(error.message);
         setMessage("Failed to initialize checkout");
         toast.error("Something went wrong!!!");
       });
@@ -71,6 +75,7 @@ const Checkout = () => {
     clientSecret,
     appearance,
   };
+
   return (
     <>
       <section>

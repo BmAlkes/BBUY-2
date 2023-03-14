@@ -1,8 +1,96 @@
-import React from "react";
-import "./styles.scss";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import Loader from "../../components/loader/Loader";
+import useFetchCollection from "../../Hooks/useFetchColletion";
+import { selectUserID } from "../../store/slice/authSlice";
+import { STORE_ORDERS } from "../../store/slice/orderSlice";
+import styles from "./styles.module.scss";
 
-const OrderHistoryPage = () => {
-  return <div>OrderHistory</div>;
+const OrderHistory = () => {
+  const { data, isLoading } = useFetchCollection("orders");
+  const orders = useSelector((state) => state.orders.orderhistory);
+  const userID = useSelector(selectUserID);
+
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    dispatch(STORE_ORDERS(data));
+  }, [dispatch, data]);
+
+  const handleClick = (id) => {
+    navigate(`/order-details/${id}`);
+  };
+
+  const filteredOrders = orders.filter((order) => order.userID === userID);
+
+  return (
+    <section>
+      <div className={`container ${styles.order}`}>
+        <h2>Your Order History</h2>
+        <p>
+          Open an order to leave a <b>Product Review</b>
+        </p>
+        <br />
+        <>
+          {isLoading && <Loader />}
+          <div className={styles.table}>
+            {filteredOrders.length === 0 ? (
+              <p>No order found</p>
+            ) : (
+              <table>
+                <thead>
+                  <tr>
+                    <th>s/n</th>
+                    <th>Date</th>
+                    <th>Order ID</th>
+                    <th>Order Amount</th>
+                    <th>Order Status</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {filteredOrders.map((order, index) => {
+                    const {
+                      id,
+                      orderDate,
+                      orderTime,
+                      orderAmount,
+                      orderStatus,
+                    } = order;
+                    return (
+                      <tr key={id} onClick={() => handleClick(id)}>
+                        <td>{index + 1}</td>
+                        <td>
+                          {orderDate} at {orderTime}
+                        </td>
+                        <td>{id}</td>
+                        <td>
+                          {"$"}
+                          {orderAmount}
+                        </td>
+                        <td>
+                          <p
+                            className={
+                              orderStatus !== "Delivered"
+                                ? `${styles.pending}`
+                                : `${styles.delivered}`
+                            }
+                          >
+                            {orderStatus}
+                          </p>
+                        </td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
+            )}
+          </div>
+        </>
+      </div>
+    </section>
+  );
 };
 
-export default OrderHistoryPage;
+export default OrderHistory;

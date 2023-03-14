@@ -1,3 +1,4 @@
+require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
 const stripe = require("stripe")(
@@ -11,7 +12,7 @@ const path = require("path");
 
 if (process.env.NODE_ENV === "production") {
   app.use(express.static("build"));
-  app.get("*", (_req, res) => {
+  app.get("*", (req, res) => {
     res.sendFile(path.resolve(__dirname, "build", "index.html"));
   });
 }
@@ -60,7 +61,7 @@ app.post("/create-payment-intent", async (req, res) => {
   });
 
   res.send({
-    clientSecret: paymentIntent,
+    clientSecret: paymentIntent.client_secret,
   });
 });
 
